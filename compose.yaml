@@ -1,0 +1,6 @@
+version: "3.9" # Specifies the Compose file version
+services: # Defines the services in the application
+  redis: # Service name
+    image: redis:7 # Uses the Redis version 7 image
+    ports: # Maps ports between the container and host
+      - "6379:6379" # Maps container port 6379 to host port 6379

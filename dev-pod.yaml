@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pralnica-dev
+spec:
+  hostNetwork: true
+  containers:
+    - name: frontend
+      image: node:18
+      workingDir: /app  # Sets the default working directory
+      command: ["yarn", "dev"]
+      ports:
+        - containerPort: 5173
+      volumeMounts:
+        - name: fe-volume
+          mountPath: /app
+
+    - name: backend
+      image: qmcgaw/godevcontainer
+      workingDir: /app  # Sets the default working directory
+      command: ["go", "run", "main.go"]
+      ports:
+        - containerPort: 1234
+      volumeMounts:
+        - name: be-volume
+          mountPath: /app
+
+    - name: postgres
+      image: postgres
+      ports:
+        - containerPort: 8080
+      volumeMounts:
+        - name: data-volume
+          mountPath: /app
+      env:
+        - name: POSTGRES_PASSWORD
+          value: trust
+        - name: PGDATA
+          value: /app
+
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready"]
+        interval: 1s
+        timeout: 5s
+        retries: 10
+
+    - name: rabbitMQ
+      image: rabbitmq:3-management
+      ports:
+        - containerPort: 5672
+        - containerPort: 15672
+      # volumeMounts:
+      #   - name: mq-volume
+      #     mountPath: /etc/rabbitmq
+      env:
+        - name: RABBITMQ_DEFAULT_USER
+          value: zajec
+        - name: RABBITMQ_DEFAULT_PASS
+          value: korenje
+
+    - name: rometheus
+      image: prom/prometheus
+      ports:
+        - containerPort: 9090
+      volumeMounts:
+        - name: prometheus-conf-volume
+          mountPath: /etc/prometheus/prometheus.yml
+      # env:
+      #   - name: RABBITMQ_DEFAULT_USER
+      #     value: zajec
+      #   - name: RABBITMQ_DEFAULT_PASS
+      #     value: korenje
+
+          
+
+  volumes:
+    - name: fe-volume
+      hostPath:
+        path: ./frontend
+        type: Directory
+    - name: be-volume
+      hostPath:
+        path: ./backend
+        type: Directory
+    - name: data-volume
+      hostPath:
+        path: ./data
+        type: Directory
+    - name: mq-volume
+      hostPath:
+        path: ./rabbitmq
+        type: Directory
+    - name: prometheus-conf-volume
+      hostPath:
+        path: ./prometheus/prometheus.yml
+        type: Directory
+
