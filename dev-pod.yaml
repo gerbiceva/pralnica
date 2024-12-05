@@ -49,6 +49,7 @@ spec:
       ports:
         - containerPort: 5672
         - containerPort: 15672
+        - containerPort: 15692
       # volumeMounts:
       #   - name: mq-volume
       #     mountPath: /etc/rabbitmq
@@ -65,11 +66,6 @@ spec:
       volumeMounts:
         - name: prometheus-conf-volume
           mountPath: /etc/prometheus/prometheus.yml
-      # env:
-      #   - name: RABBITMQ_DEFAULT_USER
-      #     value: zajec
-      #   - name: RABBITMQ_DEFAULT_PASS
-      #     value: korenje
 
           
 
