@@ -29,7 +29,7 @@ import { InfoRow, TerminRow } from "../User";
 import { useForm, UseFormReturnType } from "@mantine/form";
 import { IUser } from "../api/listUsers";
 import { useEditUser } from "../api/editUser";
-import { useGetTerminsByUser } from "../api/getTermin";
+import { useGetTerminsByUser } from "../api/termin/getTermin";
 import { TerminTable } from "./TerminTable";
 
 export interface IModalProps {

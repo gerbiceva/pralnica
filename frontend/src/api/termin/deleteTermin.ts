@@ -1,7 +1,7 @@
 import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import { mutate } from "swr";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 export const deleteTermin = (id: string) => {
   const url = `/deleteTermin`;

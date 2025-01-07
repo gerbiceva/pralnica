@@ -1,4 +1,4 @@
-import { ITermin } from "../api/addTermin";
+import { ITermin } from "../api/termin/addTermin";
 import { TableDay } from "./TableDay";
 
 export const Day = ({ date, data }: { date: Date; data: ITermin[] }) => {

@@ -12,11 +12,11 @@ import {
 } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import { useState } from "react";
-import { useGetTerminsMonthly } from "../api/getTermin";
+import { useGetTerminsMonthly } from "../api/termin/getTermin";
 import "dayjs/locale/sl";
 import { useMediaQuery } from "@mantine/hooks";
 import { useIsMobile } from "../hooks/media";
-import { ITermin } from "../api/addTermin";
+import { ITermin } from "../api/termin/addTermin";
 
 interface ICalProps {
   date: Date;

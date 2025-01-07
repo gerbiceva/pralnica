@@ -2,7 +2,6 @@ import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import { mutate } from "swr";
 import { IRegisterForm } from "../Register";
-import { IUser } from "./listUsers";
 import { fetcher } from "./swrFetcher";
 
 export const register = (user: IRegisterForm) => {

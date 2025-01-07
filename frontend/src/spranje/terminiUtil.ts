@@ -1,4 +1,4 @@
-import { ITermin } from "../api/addTermin";
+import { ITermin } from "../api/termin/addTermin";
 
 /**
  * function that generates both free and taken slots (termini) from an array of taken ones

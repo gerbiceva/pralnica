@@ -1,6 +1,6 @@
 import { Alert, Table } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons";
-import { useGetTerminsByUser } from "../api/getTermin";
+import { useGetTerminsByUser } from "../api/termin/getTermin";
 
 import { TerminRow } from "../User";
 

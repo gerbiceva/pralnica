@@ -23,7 +23,7 @@ import { useState } from "react";
 import { Cal } from "./Calendar";
 import { Day } from "./Day";
 import { IconSettings } from "@tabler/icons";
-import { useGetTerminsMonthly } from "../api/getTermin";
+import { useGetTerminsMonthly } from "../api/termin/getTermin";
 
 export const Spranje = () => {
   const [activeTab, setActiveTab] = useState<string | null>("mesec");

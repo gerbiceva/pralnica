@@ -20,7 +20,7 @@ import {
 } from "@mantine/core";
 import { IconCheck, IconCopy, IconTrash } from "@tabler/icons";
 import React from "react";
-import { useDeleteTermin } from "./api/deleteTermin";
+import { useDeleteTermin } from "./api/termin/deleteTermin";
 import { useFetchUser } from "./api/getUser";
 import { useFirebaseUser } from "./firebase";
 import { TerminTable } from "./userMgmt/TerminTable";

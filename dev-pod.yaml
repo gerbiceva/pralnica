@@ -25,6 +25,22 @@ spec:
         - name: be-volume
           mountPath: /app
 
+    - name: schema-dumper
+      image: postgres
+      workingDir: /app  # Directory inside the container to store the dump
+      command: ["/bin/sh", "-c", "pg_dump --username=postgres --schema-only > schema.sql"]
+      env:
+        - name: POSTGRES_PASSWORD
+          value: trust
+        - name: PGHOST
+          value: localhost  # Ensures the dumper connects to the PostgreSQL container
+      volumeMounts:
+        - name: be-volume
+          mountPath: /app
+      spec:
+        restartPolicy: Never
+      
+
     - name: postgres
       image: postgres
       ports:
@@ -42,7 +58,7 @@ spec:
         test: ["CMD-SHELL", "pg_isready"]
         interval: 1s
         timeout: 5s
-        retries: 10
+        retries: 0
 
     - name: rabbitMQ
       image: rabbitmq:3-management
@@ -59,7 +75,7 @@ spec:
         - name: RABBITMQ_DEFAULT_PASS
           value: korenje
 
-    - name: rometheus
+    - name: prometheus
       image: prom/prometheus
       ports:
         - containerPort: 9090
@@ -67,7 +83,6 @@ spec:
         - name: prometheus-conf-volume
           mountPath: /etc/prometheus/prometheus.yml
 
-          
 
   volumes:
     - name: fe-volume

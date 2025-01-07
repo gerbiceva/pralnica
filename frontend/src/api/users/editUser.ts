@@ -2,7 +2,7 @@ import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import { mutate } from "swr";
 import { IUser } from "./listUsers";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 export const editUser = (user: Partial<IUser>) => {
   const url = "/updateUser";

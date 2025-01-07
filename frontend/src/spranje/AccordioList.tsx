@@ -12,7 +12,7 @@ import {
   createStyles,
 } from "@mantine/core";
 import { IconPhoneCall, IconAt, IconLanguage, IconDoor } from "@tabler/icons";
-import { useAddTermin } from "../api/addTermin";
+import { useAddTermin } from "../api/termin/addTermin";
 import { IUser } from "../api/listUsers";
 
 export interface RowProps {

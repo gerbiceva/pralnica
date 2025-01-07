@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 export interface IUser {
   phone: string;

@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import { IconAlertCircle, IconCheck, IconFlag, IconTrash } from "@tabler/icons";
 import { useState } from "react";
-import { ITermin, useAddTermin } from "../api/addTermin";
+import { ITermin, useAddTermin } from "../api/termin/addTermin";
 import { useIsMobile } from "../hooks/media";
 import { me } from "../store/store";
 import { RowProps } from "./AccordioList";

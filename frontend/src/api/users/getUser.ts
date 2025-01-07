@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { IUser } from "./listUsers";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 export const fetchUser = (uuid: string) => {
   const url = `/user/${uuid}`;

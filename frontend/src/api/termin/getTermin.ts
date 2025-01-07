@@ -1,6 +1,6 @@
 import useSWR, { mutate } from "swr";
 import { ITermin } from "./addTermin";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 const getTermin = (id: string) => {
   const url = `/getTermin/${id}`;

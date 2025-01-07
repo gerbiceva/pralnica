@@ -1,0 +1,12 @@
+syntax = "proto3";
+ 
+service PralnicaService {
+    // get the list of nodes that the server supports along with their descriptions
+    rpc Hello (Nekaj) returns (Nekaj);
+}
+
+message Nekaj {
+    int32 helo = 1;
+}
+
+

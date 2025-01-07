@@ -1,8 +1,7 @@
 import { showNotification } from "@mantine/notifications";
 import { useState } from "react";
 import useSWR, { mutate } from "swr";
-import { deleteTermin } from "./deleteTermin";
-import { fetcher } from "./swrFetcher";
+import { fetcher } from "../swrFetcher";
 
 export interface ITermin {
   uuid: string; // user id
