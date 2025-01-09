@@ -10,10 +10,10 @@ import {
 } from "@mantine/core";
 import { IconEdit } from "@tabler/icons";
 import { useState } from "react";
-import { useConfirmUser } from "../api/confirmUser";
-import { useEditUser } from "../api/editUser";
-import { IUser } from "../api/listUsers";
-import { MyModal } from "./Modal";
+import { EditUserModal } from "./Modal";
+import { useEditUser } from "../api/users/editUser";
+import { IUser } from "../api/users/listUsers";
+import { useConfirmUser } from "../api/users/confirmUser";
 
 interface IUserRowProps {
   item: IUser;
@@ -21,61 +21,65 @@ interface IUserRowProps {
 }
 
 export const UserRow = ({ item: userIn, i }: IUserRowProps) => {
-  // const { error, loading, mutateUser } = useConfirmUser(userIn.uuid);
-  const { error, loading, editUserProps } = useEditUser();
+  const {
+    error: errConfirm,
+    loading: loadingConfirm,
+    mutateUser: confirmUser,
+  } = useConfirmUser(userIn.Uuid);
 
-  const mainCol = userIn.role === "admin" ? "red" : "";
+  // const { error, loading, editUserProps } = useEditUser();
+
+  const mainCol = userIn.Role === "admin" ? "red" : "";
 
   const user = (
     <Group spacing="sm">
-      <Avatar color={mainCol}>{userIn.role === "admin" ? "AD" : "UP"}</Avatar>
+      <Avatar color={mainCol}>{userIn.Role === "admin" ? "AD" : "UP"}</Avatar>
       <div>
         <Text size="sm" weight={500} color={mainCol}>
-          {userIn.name} {userIn.surname}
+          {userIn.Name} {userIn.Surname}
         </Text>
         <Text size="xs" color="dimmed">
-          {userIn.email}
+          {userIn.Email}
         </Text>
       </div>
     </Group>
   );
 
-  if (!userIn.confirmed) {
+  if (!userIn.Confirmed) {
     return (
-      <tr key={userIn.uuid}>
+      <tr key={userIn.Uuid}>
         <td>
-          <Button leftIcon={<IconEdit />} variant="light" color={mainCol}>
-            {i + 1}
-          </Button>
+          <EditUserModal mainCol={mainCol} user={userIn} />
         </td>
         <td>{user}</td>
 
         <td>
           <Text>
             <Badge color={mainCol} size="lg">
-              {userIn.room}
+              {userIn.Room}
             </Badge>
           </Text>
         </td>
 
         <td colSpan={2}>
           <Box
-            style={{
-              backgroundColor: "rgba(0, 255, 50, 0.1)",
+            sx={(theme) => ({
               borderRadius: "5px",
               padding: "0.5rem",
+            })}
+            style={{
+              backgroundColor: "rgba(0, 255, 50, 0.1)",
             }}
           >
             <Button
               size="xs"
-              loading={loading}
+              loading={loadingConfirm}
               onClick={() => {
-                confirm("Zelite potrditi osebo?") &&
-                  editUserProps({ uuid: userIn.uuid, confirmed: true });
+                confirm("Zelite potrditi osebo?") && confirmUser();
               }}
-              color={"teal"}
+              color={errConfirm ? "yellow" : "green"}
             >
-              {error ? "Ponovi" : "Potrdi"}
+              {errConfirm ? "Ponovi" : "Potrdi"}
             </Button>
           </Box>
         </td>
@@ -84,44 +88,44 @@ export const UserRow = ({ item: userIn, i }: IUserRowProps) => {
   }
 
   return (
-    <tr key={userIn.uuid}>
+    <tr key={userIn.Uuid}>
       <td>
         {/* <Button leftIcon={<IconEdit />} variant="light" color={mainCol}>
           {i + 1}
         </Button> */}
-        <MyModal mainCol={mainCol} user={userIn} />
+        <EditUserModal mainCol={mainCol} user={userIn} />
       </td>
       <td
         style={{
-          opacity: userIn.disabled ? 0.2 : 1,
+          opacity: userIn.Disabled ? 0.2 : 1,
         }}
       >
         {user}
       </td>
       <td
         style={{
-          opacity: userIn.disabled ? 0.2 : 1,
+          opacity: userIn.Disabled ? 0.2 : 1,
         }}
       >
         <Badge color={mainCol} size="lg">
-          {userIn.room}
+          {userIn.Room}
         </Badge>
       </td>
       <td
         style={{
-          opacity: userIn.disabled ? 0.2 : 1,
+          opacity: userIn.Disabled ? 0.2 : 1,
         }}
       >
-        {userIn.phone}
+        {userIn.Phone}
       </td>
 
-      {/* <td>
-        {!item.disabled ? (
-          <Badge color="green">Aktiven</Badge>
-        ) : (
+      <td>
+        {userIn.Disabled ? (
           <Badge color="red">Onemogočen</Badge>
+        ) : (
+          <Badge color="green">Aktiven</Badge>
         )}
-      </td> */}
+      </td>
     </tr>
   );
 };

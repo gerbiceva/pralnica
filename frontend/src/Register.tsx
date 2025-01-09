@@ -24,18 +24,28 @@ import {
 } from "firebase/auth";
 import { showNotification } from "@mantine/notifications";
 
-// import BG from "../public/leaves.png";
-import { auth } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useRegisterUser } from "./api/registerUser";
-import { IUser } from "./api/listUsers";
 import { addUser } from "./store/store";
 import { user } from "firebase-functions/v1/auth";
+import { IUser } from "./api/users/listUsers";
 
-type BasicUser = Omit<IUser, "disabled" | "uuid" | "confirmed" | "role">;
+type BasicUser = Omit<
+  IUser,
+  | "disabled"
+  | "uuid"
+  | "confirmed"
+  | "role"
+  | "UpdatedAt"
+  | "CreatedAt"
+  | "Uuid"
+  | "Disabled"
+  | "Confirmed"
+  | "Role"
+>;
 export interface IRegisterForm extends BasicUser {
-  password: string;
+  Password: string;
 }
 
 function roomNumberInRange(val: number) {
@@ -57,23 +67,23 @@ export function AuthenticationForm(props: PaperProps) {
 
   const form = useForm<IRegisterForm>({
     initialValues: {
-      name: "",
-      surname: "",
-      room: 0,
-      email: "enei@enei.enei",
-      password: "eneienei",
-      phone: "+386",
+      Name: "",
+      Surname: "",
+      Room: 0,
+      Email: "enei@enei.enei",
+      Password: "eneienei",
+      Phone: "+386",
     },
 
     validate: {
-      name: (val) => (type === "register" && !val ? "Manjka ime." : null),
-      surname: (val) =>
+      Name: (val) => (type === "register" && !val ? "Manjka ime." : null),
+      Surname: (val) =>
         type === "register" && !val ? "Manjka priimek." : null,
-      email: (val) =>
+      Email: (val) =>
         /^\S+@\S+$/.test(val) ? null : "Neveljaven email naslov.",
-      password: (val) =>
+      Password: (val) =>
         val.length < 8 ? "Geslo mora vsebovati vsaj 8 znakov." : null,
-      room: (val: number | undefined) =>
+      Room: (val: number | undefined) =>
         type == "login" || (val && roomNumberInRange(val))
           ? null
           : "Neveljavna številka sobe.",
@@ -105,29 +115,29 @@ export function AuthenticationForm(props: PaperProps) {
                 })
                 .finally(() => setLoading(false));
             } else {
-              signInWithEmailAndPassword(auth, a.email, a.password)
-                .then((userCredential) => {
-                  addUser({
-                    email: userCredential?.user?.email || "",
-                    name: userCredential?.user?.displayName || "",
-                    phone: userCredential?.user?.phoneNumber || "",
-                    role: "",
-                    uuid: userCredential?.user?.uid || "",
-                  });
-                  redirect("/");
-                })
-                .catch((error) => {
-                  const errorCode = error.code;
-                  const errorMessage = error.message;
-                  showNotification({
-                    title: `Prijavna napaka ${errorCode}`,
-                    message: errorMessage,
-                    color: "red",
-                  });
-                })
-                .finally(() => {
-                  setLoading(false);
-                });
+              // signInWithEmailAndPassword(auth, a.email, a.password)
+              //   .then((userCredential) => {
+              //     addUser({
+              //       email: userCredential?.user?.email || "",
+              //       name: userCredential?.user?.displayName || "",
+              //       phone: userCredential?.user?.phoneNumber || "",
+              //       role: "",
+              //       uuid: userCredential?.user?.uid || "",
+              //     });
+              //     redirect("/");
+              //   })
+              //   .catch((error) => {
+              //     const errorCode = error.code;
+              //     const errorMessage = error.message;
+              //     showNotification({
+              //       title: `Prijavna napaka ${errorCode}`,
+              //       message: errorMessage,
+              //       color: "red",
+              //     });
+              //   })
+              //   .finally(() => {
+              //     setLoading(false);
+              //   });
             }
           })}
         >
@@ -137,7 +147,7 @@ export function AuthenticationForm(props: PaperProps) {
                 <TextInput
                   label="Ime"
                   placeholder="Ime"
-                  value={form.values.name}
+                  value={form.values.Name}
                   onChange={(event) =>
                     form.setFieldValue("name", event.currentTarget.value)
                   }
@@ -147,7 +157,7 @@ export function AuthenticationForm(props: PaperProps) {
                 <TextInput
                   label="Priimek"
                   placeholder="Priimek"
-                  value={form.values.surname}
+                  value={form.values.Surname}
                   onChange={(event) =>
                     form.setFieldValue("surname", event.currentTarget.value)
                   }
@@ -158,7 +168,7 @@ export function AuthenticationForm(props: PaperProps) {
                   label="Telefon"
                   type="tel"
                   placeholder="+386 40 123 456"
-                  value={form.values.phone}
+                  value={form.values.Phone}
                   onChange={(event) =>
                     form.setFieldValue("phone", event.currentTarget.value)
                   }
@@ -168,7 +178,7 @@ export function AuthenticationForm(props: PaperProps) {
                 <NumberInput
                   label="Številka sobe"
                   placeholder="401"
-                  value={form.values.room}
+                  value={form.values.Room}
                   onChange={(num) => form.setFieldValue("room", num || 0)}
                   hideControls
                   error={form.errors.room}
@@ -179,7 +189,7 @@ export function AuthenticationForm(props: PaperProps) {
             <TextInput
               label="Email"
               placeholder="nekdo@gmail.com"
-              value={form.values.email}
+              value={form.values.Email}
               onChange={(event) =>
                 form.setFieldValue("email", event.currentTarget.value)
               }
@@ -189,7 +199,7 @@ export function AuthenticationForm(props: PaperProps) {
             <PasswordInput
               label="Geslo"
               placeholder="Geslo"
-              value={form.values.password}
+              value={form.values.Password}
               onChange={(event) =>
                 form.setFieldValue("password", event.currentTarget.value)
               }

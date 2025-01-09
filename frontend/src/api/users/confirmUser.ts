@@ -3,15 +3,12 @@ import { useState } from "react";
 import { mutate } from "swr";
 import { fetcher } from "../swrFetcher";
 
-export const confirmUser = ({ uuid }: { uuid: string }) => {
-  const url = "/setConfirmed";
+export const confirmUser = (uuid: string) => {
+  const url = `/users/confirm/${uuid}`;
 
   return new Promise((resolve, reject) => {
-    const payload = { uuid, confirmed: true };
-    console.log(payload, url);
-
     fetcher
-      .post(url, payload)
+      .post(url)
       .then((res) => {
         showNotification({
           color: "green",
@@ -40,7 +37,7 @@ export const useConfirmUser = (uuid: string) => {
 
   const mutateUser = () => {
     setLoading(true);
-    confirmUser({ uuid })
+    confirmUser(uuid)
       .then(() => {
         mutate("users");
       })

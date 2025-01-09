@@ -13,7 +13,7 @@ import {
 } from "@mantine/core";
 import { IconPhoneCall, IconAt, IconLanguage, IconDoor } from "@tabler/icons";
 import { useAddTermin } from "../api/termin/addTermin";
-import { IUser } from "../api/listUsers";
+import { IUser } from "../api/users/listUsers";
 
 export interface RowProps {
   hourFrom: number;
@@ -34,127 +34,6 @@ const useStyles = createStyles((theme) => ({
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
-
-export const terminDUmmy: RowProps[] = [
-  {
-    hourFrom: 0,
-    hourTo: 3,
-    machine: 1,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 3,
-    hourTo: 6,
-    machine: 1,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 6,
-    hourTo: 9,
-    machine: 2,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 9,
-    hourTo: 12,
-    machine: 1,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 12,
-    hourTo: 15,
-    machine: 1,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 15,
-    hourTo: 18,
-    machine: 1,
-    user: {
-      uuid: "asasduqnqajsdwa",
-      name: "Janez",
-      surname: "novak",
-      email: "janez@novak.com",
-      confirmed: true,
-      role: "user",
-      disabled: false,
-      room: 302,
-      phone: "+38631366200",
-    },
-  },
-  {
-    hourFrom: 18,
-    hourTo: 21,
-    machine: 1,
-    user: undefined,
-  },
-  {
-    hourFrom: 21,
-    hourTo: 24,
-    machine: 2,
-    user: {
-      uuid: "sdasdawdwdasdwa",
-      name: "Zan",
-      surname: "Gej",
-      email: "zan@gej.com",
-      confirmed: true,
-      role: "admin",
-      disabled: false,
-      room: 399,
-      phone: "+38631366200",
-    },
-  },
-];
 
 function usertoAvatar(user: IUser) {
   const col = user.role == "admin" ? "purple" : "blue";
@@ -195,14 +74,14 @@ function usertoAvatar(user: IUser) {
 // }
 
 export function AccordionList() {
-  const { addTermin, error, loading } = useAddTermin();
+  const { addTerminF, error, loading } = useAddTermin();
   const { classes } = useStyles();
 
-  const items = terminDUmmy.map((item, i) => (
+  const ins: RowProps[] = [];
+
+  const items = ins.map((item, i) => (
     <Accordion.Item value={"item_" + i} key={"item_" + i}>
-      <Accordion.Control>
-        <AccordionLabel {...item} />
-      </Accordion.Control>
+      <Accordion.Control>{/* <Accordion. {...item} /> */}</Accordion.Control>
       <Accordion.Panel>
         {item.user && (
           <>
@@ -247,7 +126,7 @@ export function AccordionList() {
                 console.log(item.user);
 
                 item.user &&
-                  addTermin({
+                  addTerminF({
                     uuid: item.user.uuid,
                     washer: item.machine,
                     termin: i,

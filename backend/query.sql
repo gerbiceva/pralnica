@@ -27,6 +27,11 @@ SELECT uuid, phone, name, surname, room, email, disabled, confirmed, role, creat
 FROM users
 WHERE uuid = $1;
 
+-- name: GetUsers :many
+SELECT uuid, phone, name, surname, room, email, disabled, confirmed, role, created_at, updated_at
+FROM users
+ORDER BY uuid;
+
 -- name: GetUserReservations :many
 SELECT * FROM get_user_reservations($1);
 

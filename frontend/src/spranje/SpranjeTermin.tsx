@@ -1,5 +1,5 @@
 import { Badge, Paper } from "@mantine/core";
-import { IUser } from "../api/listUsers";
+import { IUser } from "../api/users/listUsers";
 
 export interface ITerminProps {
   hourFrom: number;

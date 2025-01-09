@@ -19,11 +19,9 @@ import {
   Alert,
 } from "@mantine/core";
 import { IconCheck, IconCopy, IconTrash } from "@tabler/icons";
-import React from "react";
 import { useDeleteTermin } from "./api/termin/deleteTermin";
-import { useFetchUser } from "./api/getUser";
-import { useFirebaseUser } from "./firebase";
 import { TerminTable } from "./userMgmt/TerminTable";
+import { useFetchSelf } from "./api/users/getSelf";
 
 interface IRowProps {
   dKey: string;
@@ -105,10 +103,9 @@ const PresidentInfo = () => {
 };
 
 export const User = () => {
-  const user = useFirebaseUser();
-  const { data, error } = useFetchUser(user?.uid || "");
+  const { data: user, error } = useFetchSelf();
 
-  if (!user || !data) {
+  if (!user) {
     return <Paper>No connected user</Paper>;
   }
 
@@ -127,22 +124,22 @@ export const User = () => {
         <Stack spacing={"md"}>
           <Flex align="center" m="lg" mb={"2rem"} justify="center">
             <Avatar radius="xl" size="lg">
-              {data.room}
+              {user.Room}
             </Avatar>
             <Box m={"xl"} />
             <Title>
-              {data.name} {data.surname}
+              {user.Name} {user.Surname}
             </Title>
           </Flex>
           <Divider my="sm" label={"Kontakt"} labelPosition="right" />
           <Table>
             <tbody>
-              <InfoRow dKey="telefon" data={data.phone} />
-              <InfoRow dKey="e-mail" data={data.email} />
+              <InfoRow dKey="telefon" data={user.Phone} />
+              <InfoRow dKey="e-mail" data={user.Email} />
             </tbody>
           </Table>
-          {data.disabled && <Alert>OJOJ BANAN SI</Alert>}
-          <TerminTable uuid={user?.uid} />
+          {user.Disabled && <Alert>OJOJ BANAN SI</Alert>}
+          <TerminTable uuid={user?.Uuid} />
           <PresidentInfo />
         </Stack>
       </Paper>

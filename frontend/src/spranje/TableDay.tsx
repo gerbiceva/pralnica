@@ -22,8 +22,8 @@ import { me } from "../store/store";
 import { RowProps } from "./AccordioList";
 import { UserButton } from "./UserButton";
 import { useStore } from "@nanostores/react";
-import { useFetchUser } from "../api/getUser";
 import { generateTermini } from "./terminiUtil";
+import { useFetchUser } from "../api/users/getUser";
 
 const useStyles = createStyles((theme) => ({
   name: {
@@ -99,8 +99,8 @@ const ReservationTdUser = ({
 
   return (
     <UserButton
-      email={user.email}
-      name={user.name + " " + user.surname}
+      email={user.Email}
+      name={user.Name + " " + user.Surname}
       maw={300}
       onClick={() => setModal(true)}
     />
@@ -146,16 +146,16 @@ const ReservationModal = ({
 
       <Flex align="center" justify="space-between">
         <Title className={classes.name}>
-          {user?.name + " " + user?.surname}
+          {user?.Name + " " + user?.Surname}
         </Title>
         <Badge size="xl" mt="2">
-          {user?.room}
+          {user?.Room}
         </Badge>
       </Flex>
       <Stack spacing="xs" align="flex-start">
         <Box>
-          <Text>{user?.email}</Text>
-          <Text>{user?.phone}</Text>
+          <Text>{user?.Email}</Text>
+          <Text>{user?.Phone}</Text>
         </Box>
       </Stack>
 

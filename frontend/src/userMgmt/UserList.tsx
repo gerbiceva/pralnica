@@ -11,13 +11,14 @@ import {
   Flex,
   Alert,
   Box,
+  Stack,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { skeletalRows } from "../skeletons";
 import { UserRow } from "./UserRow";
 import { InputWithButton } from "./FancySearch";
-import { fetchUsers, IUser, useFetchUsers } from "../api/listUsers";
 import { IconAlertCircle } from "@tabler/icons";
+import { IUser, useFetchUsers } from "../api/users/listUsers";
 
 interface UsersTableProps {
   data?: Promise<IUser[]>;
@@ -44,9 +45,15 @@ export function UsersRolesTable() {
   const filtered = filterSearch(search, data || []);
 
   return (
-    <ScrollArea m="lg">
-      {/* <Flex direction="column"> */}
-      <Flex m={32} align="center" justify="center">
+    <Flex
+      h="100%"
+      direction="column"
+      justify="space-between"
+      style={{
+        overflow: "hidden",
+      }}
+    >
+      <Flex align="center" justify="center" py="lg">
         <InputWithButton
           disabled={data?.length == 0}
           value={search}
@@ -55,58 +62,63 @@ export function UsersRolesTable() {
           }}
         />
       </Flex>
-      <Table verticalSpacing="sm">
-        <thead>
-          <tr>
-            <th></th>
-            <th>Oseba</th>
-            <th>Številka sobe</th>
-            <th>Telefon</th>
-          </tr>
-        </thead>
-        {error && (
-          <tbody>
+      <ScrollArea
+        style={{
+          flex: 1,
+        }}
+      >
+        <Table verticalSpacing="sm">
+          <thead>
             <tr>
-              <td colSpan={4}>
-                <Alert
-                  icon={<IconAlertCircle size={16} />}
-                  title="ojoj"
-                  color="red"
-                  variant="outline"
-                >
-                  Neki je šlo narobe. Probi osvežit stran. Detajli v konzoli.
-                </Alert>
-              </td>
+              <th></th>
+              <th>Oseba</th>
+              <th>Številka sobe</th>
+              <th>Telefon</th>
             </tr>
-          </tbody>
-        )}
-        {data && data.length == 0 && (
-          <tbody>
-            <tr>
-              <td colSpan={4}>
-                <Alert
-                  icon={<IconAlertCircle size={16} />}
-                  title="Ni uporabnikov"
-                  variant="outline"
-                >
-                  V bazi ni bil najden noben registriran uporabnik. Naj se kdo
-                  registrira ...
-                </Alert>
-              </td>
-            </tr>
-          </tbody>
-        )}
-        {!data && !error && <tbody>{skeletalRows}</tbody>}
-        {!error && (
-          <tbody>
-            {filtered.map &&
-              filtered.map((user, i) => (
-                <UserRow i={i} key={user.uuid} item={user} />
-              ))}
-          </tbody>
-        )}
-      </Table>
-    </ScrollArea>
-    // </Flex>
+          </thead>
+          {error && (
+            <tbody>
+              <tr>
+                <td colSpan={4}>
+                  <Alert
+                    icon={<IconAlertCircle size={16} />}
+                    title="ojoj"
+                    color="red"
+                    variant="outline"
+                  >
+                    Neki je šlo narobe. Probi osvežit stran. Detajli v konzoli.
+                  </Alert>
+                </td>
+              </tr>
+            </tbody>
+          )}
+          {data && data.length == 0 && (
+            <tbody>
+              <tr>
+                <td colSpan={4}>
+                  <Alert
+                    icon={<IconAlertCircle size={16} />}
+                    title="Ni uporabnikov"
+                    variant="outline"
+                  >
+                    V bazi ni bil najden noben registriran uporabnik. Naj se kdo
+                    registrira ...
+                  </Alert>
+                </td>
+              </tr>
+            </tbody>
+          )}
+          {!data && !error && <tbody>{skeletalRows}</tbody>}
+          {!error && (
+            <tbody>
+              {filtered.map &&
+                filtered.map((user, i) => (
+                  <UserRow i={i} key={user.Uuid} item={user} />
+                ))}
+            </tbody>
+          )}
+        </Table>
+      </ScrollArea>
+    </Flex>
   );
 }

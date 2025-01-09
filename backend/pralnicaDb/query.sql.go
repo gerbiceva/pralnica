@@ -3,7 +3,7 @@
 //   sqlc v1.27.0
 // source: query.sql
 
-package db
+package pralnicaDb
 
 import (
 	"context"
@@ -143,6 +143,44 @@ func (q *Queries) GetUserReservations(ctx context.Context, userUuid pgtype.UUID)
 			return nil, err
 		}
 		items = append(items, get_user_reservations)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getUsers = `-- name: GetUsers :many
+SELECT uuid, phone, name, surname, room, email, disabled, confirmed, role, created_at, updated_at
+FROM users
+ORDER BY uuid
+`
+
+func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
+	rows, err := q.db.Query(ctx, getUsers)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []User
+	for rows.Next() {
+		var i User
+		if err := rows.Scan(
+			&i.Uuid,
+			&i.Phone,
+			&i.Name,
+			&i.Surname,
+			&i.Room,
+			&i.Email,
+			&i.Disabled,
+			&i.Confirmed,
+			&i.Role,
+			&i.CreatedAt,
+			&i.UpdatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err

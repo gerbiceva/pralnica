@@ -25,7 +25,6 @@ import {
   IconBook,
 } from "@tabler/icons";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase";
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -116,9 +115,9 @@ export function NavbarMinimal() {
           icon={IconLogout}
           label="Logout"
           onClick={() => {
-            auth.signOut().then(() => {
-              redirect("/login");
-            });
+            // auth.signOut().then(() => {
+            //   redirect("/login");
+            // });
           }}
         />
       </Stack>

@@ -17,7 +17,7 @@ export const register = (user: IRegisterForm) => {
         showNotification({
           color: "green",
           title: "Uporabnik registriran!",
-          message: `Yo ${user.name}! vabljen.`,
+          message: `Yo ${user.Name}! vabljen.`,
         });
       })
       .catch((e: Error) => {

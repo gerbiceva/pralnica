@@ -1,23 +1,20 @@
-import { forwardRef, useEffect, useState } from "react";
 import {
-  Modal,
-  Button,
-  Group,
   Avatar,
   Box,
+  Button,
   Divider,
   Flex,
-  Stack,
-  Table,
-  Title,
   Input,
+  Modal,
+  NumberInput,
   Select,
-  Text,
+  Stack,
   Switch,
-  Alert,
+  Text,
+  Title,
 } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import {
-  IconAlertCircle,
   IconAt,
   IconDoor,
   IconEdit,
@@ -25,11 +22,9 @@ import {
   IconPhone,
   IconUserCircle,
 } from "@tabler/icons";
-import { InfoRow, TerminRow } from "../User";
-import { useForm, UseFormReturnType } from "@mantine/form";
-import { IUser } from "../api/listUsers";
-import { useEditUser } from "../api/editUser";
-import { useGetTerminsByUser } from "../api/termin/getTermin";
+import { useEffect, useState } from "react";
+import { useEditUser } from "../api/users/editUser";
+import { IUser } from "../api/users/listUsers";
 import { TerminTable } from "./TerminTable";
 
 export interface IModalProps {
@@ -37,7 +32,7 @@ export interface IModalProps {
   user: IUser;
 }
 
-export function MyModal({ mainCol, user }: IModalProps) {
+export function EditUserModal({ mainCol, user }: IModalProps) {
   const [opened, setOpened] = useState(false);
   const { error, loading, editUserProps } = useEditUser();
 
@@ -45,10 +40,6 @@ export function MyModal({ mainCol, user }: IModalProps) {
     initialValues: {
       ...user,
     },
-
-    // validate: {
-    //   email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
-    // },
   });
 
   useEffect(() => {
@@ -75,11 +66,11 @@ export function MyModal({ mainCol, user }: IModalProps) {
           <Flex m="lg" mb={"2rem"} direction="row" align={"center"}>
             {/* <Flex align="center" justify="center"> */}
             <Avatar radius="xl" size="lg" color="blue">
-              {user.room}
+              {user.Room}
             </Avatar>
             <Box m={"xl"} />
             <Box>
-              <Title>{`${user.name} ${user.surname}`}</Title>
+              <Title>{`${user.Name} ${user.Surname}`}</Title>
               {/* <Text py={"xs"} size="xs" opacity={0.4}>
                 {user.uuid}
               </Text> */}
@@ -90,7 +81,7 @@ export function MyModal({ mainCol, user }: IModalProps) {
       >
         <Text size="xs" opacity={0.4}>
           <strong>UUID: </strong>
-          {user.uuid}
+          {user.Uuid}
         </Text>
         <form
           onSubmit={form.onSubmit((values) => {
@@ -102,44 +93,44 @@ export function MyModal({ mainCol, user }: IModalProps) {
             {/* <Input icon={<IconAt />} placeholder="email" /> */}
             <Input
               icon={<IconAt size={16} />}
-              placeholder="ime"
+              placeholder="Email"
               __staticSelector=""
               value={"lan.vukusic@gmail.com"}
-              {...form.getInputProps("email")}
+              {...form.getInputProps("Email")}
             />
             <Input
               icon={<IconUserCircle size={16} />}
               placeholder="ime"
               __staticSelector=""
-              {...form.getInputProps("name")}
+              {...form.getInputProps("Name")}
             />
             <Input
               icon={<IconUserCircle size={16} />}
               placeholder="priimek"
-              {...form.getInputProps("surname")}
+              {...form.getInputProps("Surname")}
             />
             <Input
               icon={<IconPhone size={16} />}
               placeholder="telefon"
               type="tel"
-              {...form.getInputProps("phone")}
+              {...form.getInputProps("Phone")}
             />
-            <Input
+            <NumberInput
               icon={<IconDoor size={16} />}
-              placeholder="350"
+              placeholder={350}
               type="number"
-              {...form.getInputProps("room")}
+              {...form.getInputProps("Room")}
             />
             <Switch
               onLabel="Bannan"
               offLabel="Aktiven"
               size="lg"
               color="red"
-              {...form.getInputProps("disabled", { type: "checkbox" })}
+              {...form.getInputProps("Disabled", { type: "checkbox" })}
             />
             <Divider label={"Administracija"} labelPosition="right" />
             <Select
-              {...form.getInputProps("role")}
+              {...form.getInputProps("Role")}
               label="Uporabniški tip"
               placeholder="Uporabniški tip"
               icon={<IconLock size={14} />}
@@ -162,7 +153,7 @@ export function MyModal({ mainCol, user }: IModalProps) {
             </Flex>
             <Divider label={"Termini"} labelPosition="right" />
 
-            <TerminTable uuid={user.uuid} />
+            <TerminTable uuid={user.Uuid} />
           </Stack>
         </form>
       </Modal>

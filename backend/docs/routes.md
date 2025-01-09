@@ -5,24 +5,127 @@ Welcome to the documentation for the RESTful API.
 ## Routes
 
 <details>
-<summary>`/`</summary>
+<summary>`/metrics`</summary>
 
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
-- **/**
-	- _GET_
-		- [main.main.func1]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/metrics**
+	- _*_
+		- [InstrumentHandlerCounter.func1]()
 
 </details>
 <details>
-<summary>`/user`</summary>
+<summary>`/reservations/month`</summary>
 
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
-- **/user**
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/reservations/month**
 	- _GET_
-		- [main.main.func2]()
+		- [GetReservationsByMonth]()
+
+</details>
+<details>
+<summary>`/reservations/user/{uuid}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/reservations/user/{uuid}**
+	- _GET_
+		- [GetUserReservations]()
+
+</details>
+<details>
+<summary>`/reservations/{id}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/reservations/{id}**
+	- _DELETE_
+		- [DeleteReservation]()
+
+</details>
+<details>
+<summary>`/swagger`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/swagger**
+	- _*_
+		- [v5.(*Mux).Mount.func1]()
+
+</details>
+<details>
+<summary>`/users`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users**
+	- _GET_
+		- [GetUsers]()
+
+</details>
+<details>
+<summary>`/users/ban/{uuid}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users/ban/{uuid}**
+	- _POST_
+		- [BanUser]()
+
+</details>
+<details>
+<summary>`/users/confirm/{uuid}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users/confirm/{uuid}**
+	- _POST_
+		- [ConfirmUser]()
+
+</details>
+<details>
+<summary>`/users/search`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users/search**
+	- _GET_
+		- [SearchUsers]()
+
+</details>
+<details>
+<summary>`/users/self`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users/self**
+	- _GET_
+		- [GetSelf]()
+
+</details>
+<details>
+<summary>`/users/{uuid}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/users/{uuid}**
+	- _GET_
+		- [GetUser]()
+	- _POST_
+		- [EditUser]()
 
 </details>
 
-Total # of routes: 2
+Total # of routes: 11

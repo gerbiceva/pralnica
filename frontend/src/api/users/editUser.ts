@@ -5,7 +5,7 @@ import { IUser } from "./listUsers";
 import { fetcher } from "../swrFetcher";
 
 export const editUser = (user: Partial<IUser>) => {
-  const url = "/updateUser";
+  const url = `/users/${user.Uuid}`;
 
   return new Promise((resolve, reject) => {
     const payload = user;
@@ -17,7 +17,7 @@ export const editUser = (user: Partial<IUser>) => {
         showNotification({
           color: "green",
           title: "Posodobljeno!",
-          message: `Uporabnik ${user.name} posodobljen!`,
+          message: `Uporabnik ${user.Name} posodobljen!`,
         });
       })
       .catch((e: Error) => {

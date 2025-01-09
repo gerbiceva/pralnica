@@ -2,8 +2,8 @@ import useSWR from "swr";
 import { IUser } from "./listUsers";
 import { fetcher } from "../swrFetcher";
 
-export const fetchUser = (uuid: string) => {
-  const url = `/users/${uuid}`;
+export const fetchUser = () => {
+  const url = `/users/self`;
   return new Promise<IUser>((resolve, reject) => {
     fetcher
       .get<IUser>(url)
@@ -19,8 +19,6 @@ export const fetchUser = (uuid: string) => {
   });
 };
 
-export const useFetchUser = (uuid: string) => {
-  console.log("useFetchUser", uuid);
-
-  return useSWR<IUser>("users", () => fetchUser(uuid));
+export const useFetchSelf = () => {
+  return useSWR<IUser>("users/self", () => fetchUser());
 };

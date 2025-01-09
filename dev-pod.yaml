@@ -24,6 +24,11 @@ spec:
       volumeMounts:
         - name: be-volume
           mountPath: /app
+      env:
+        - name: POSTGRES_PASSWORD
+          value: trust
+        - name: PGHOST
+          value: localhost  # En
 
     - name: schema-dumper
       image: postgres
