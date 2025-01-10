@@ -50,20 +50,19 @@ const ReservationTd = ({
     <Flex align="center">
       <Button
         ml={mobile ? "xs" : "xl"}
-        // miw={mobile ? 100 : 250}
+        miw={mobile ? 100 : 250}
         variant="subtle"
         onClick={() => {
           confirm("Ali si prepričan, da želiš rezervirati termin?") &&
             addTerminF({
-              uuid: selfUser?.uuid || "",
-              date: date,
-              termin: termin,
-              washer: washer,
+              Uuid: selfUser?.Uuid || "",
+              Date: date,
+              Termin: termin,
+              Washer: washer,
             });
         }}
         size={mobile ? "xs" : "md"}
         loading={loading}
-        disabled={selfUser == null}
         leftIcon={mobile ? undefined : <IconCheck />}
       >
         Rezerviraj
@@ -233,6 +232,7 @@ export const TableDay = ({
 
   return (
     <ScrollArea>
+      {date.toLocaleDateString()}
       <Table verticalSpacing="xs">
         <thead>
           <tr>
@@ -256,7 +256,7 @@ export const TableDay = ({
                     <UserRow
                       hourFrom={hourFrom}
                       hourTo={hourTo}
-                      uuid={left.uuid}
+                      uuid={left.Uuid}
                     />
                   ) : (
                     <ReservationTd washer={1} termin={i} date={date} />
@@ -267,7 +267,7 @@ export const TableDay = ({
                     <UserRow
                       hourFrom={hourFrom}
                       hourTo={hourTo}
-                      uuid={right.uuid}
+                      uuid={right.Uuid}
                     />
                   ) : (
                     <ReservationTd washer={2} termin={i} date={date} />

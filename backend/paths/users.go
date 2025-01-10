@@ -63,7 +63,11 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 func SearchUsers(w http.ResponseWriter, r *http.Request) {
 	searchText := r.URL.Query().Get("search_text")
 
-	users, err := dbclient.Client.SearchUsers(r.Context(), searchText)
+	var pgSearch pgtype.Text
+	pgSearch.String = searchText
+	pgSearch.Valid = true
+
+	users, err := dbclient.Client.SearchUsers(r.Context(), pgSearch)
 	if err != nil {
 		http.Error(w, "Unable to search users", http.StatusInternalServerError)
 		return

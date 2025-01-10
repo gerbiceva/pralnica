@@ -1,14 +1,20 @@
 import { atom } from "nanostores";
 
 type SelfUser = {
-  uuid: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
+  Uuid: string;
+  Name: string;
+  Email: string;
+  Phone: string;
+  Role: string;
 };
 
-export const me = atom<SelfUser | null>(null);
+export const me = atom<SelfUser | null>({
+  Uuid: "17587b7c-8038-470a-829b-0b417dde45fd",
+  Phone: "12345678960",
+  Name: "Tina",
+  Email: "eve.miller@example.com,mm",
+  Role: "admin",
+});
 
 export function addUser(user: SelfUser) {
   me.set(user);

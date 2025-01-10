@@ -19,7 +19,9 @@ const getTermin = (id: string) => {
   });
 };
 export const useGetTermin = (uuid: string) => {
-  return useSWR<ITermin>("reservations/" + uuid, () => getTermin(uuid));
+  return useSWR<ITermin>(["reservations/" + uuid, "termin"], () =>
+    getTermin(uuid)
+  );
 };
 
 const getTerminsByUser = (uuid: string, active?: boolean) => {
@@ -44,7 +46,7 @@ const getTerminsByUser = (uuid: string, active?: boolean) => {
 };
 export const useGetTerminsByUser = (uuid: string, active: boolean = true) => {
   // const stillActive = active ? "/active" : "";
-  return useSWR<ITermin[]>("/reservations/user/" + uuid, () =>
+  return useSWR<ITermin[]>(["/reservations/user/" + uuid, "termin"], () =>
     getTerminsByUser(uuid, active)
   );
 };
@@ -89,7 +91,8 @@ const getTerminsMonthly = (month: Date) => {
 };
 
 export const useGetTerminsMonthly = (month: Date) => {
-  return useSWR<ITermin[]>(`/getTerminsMonthly/${month.toISOString()}`, () =>
-    getTerminsMonthly(month)
+  return useSWR<ITermin[]>(
+    [`/getTerminsMonthly/${month.toISOString()}`, "termin"],
+    () => getTerminsMonthly(month)
   );
 };

@@ -32,11 +32,54 @@ SELECT uuid, phone, name, surname, room, email, disabled, confirmed, role, creat
 FROM users
 ORDER BY uuid;
 
+-- name: AddReservation :one
+INSERT INTO reservations (
+    uuid, 
+    date, 
+    termin, 
+    washer
+) VALUES (
+    $1, $2, $3, $4
+)
+RETURNING id, uuid, date, termin, washer;
+
 -- name: GetUserReservations :many
-SELECT * FROM get_user_reservations($1);
+SELECT
+    r.uuid,
+    r.id,
+    r.date,
+    r.termin,
+    r.washer
+FROM
+    reservations r
+WHERE
+    r.uuid = $1;
 
 -- name: GetReservationsByMonth :many
-SELECT * FROM get_reservations_by_month($1);
+SELECT
+    r.id,
+    r.uuid,
+    r.date,
+    r.termin,
+    r.washer
+FROM
+    reservations r
+WHERE
+    r.date >= DATE_TRUNC('month', $1::date)
+    AND r.date < DATE_TRUNC('month', $1::date) + INTERVAL '1 month';
 
 -- name: SearchUsers :many
-SELECT * FROM search_users($1);
+SELECT
+    u.uuid,
+    u.phone,
+    u.name,
+    u.surname,
+    u.email,
+    u.role
+FROM
+    users u
+WHERE
+    LOWER(u.name) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.surname) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.phone) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.email) LIKE LOWER('%' || $1 || '%');

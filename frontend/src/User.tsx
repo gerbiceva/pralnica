@@ -43,12 +43,10 @@ export const TerminRow = ({
   washer,
   date,
   id,
-  uuid,
 }: {
   washer: number;
   date: Date;
   id: string;
-  uuid: string;
 }) => {
   const { delTermin, error, loading } = useDeleteTermin();
 
@@ -64,7 +62,7 @@ export const TerminRow = ({
           loading={loading}
           disabled={error != null}
           onClick={() => {
-            delTermin(id, uuid);
+            delTermin(id);
           }}
         >
           <IconTrash size={18} />

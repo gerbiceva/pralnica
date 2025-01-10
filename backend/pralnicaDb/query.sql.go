@@ -11,6 +11,43 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+const addReservation = `-- name: AddReservation :one
+INSERT INTO reservations (
+    uuid, 
+    date, 
+    termin, 
+    washer
+) VALUES (
+    $1, $2, $3, $4
+)
+RETURNING id, uuid, date, termin, washer
+`
+
+type AddReservationParams struct {
+	Uuid   pgtype.UUID
+	Date   pgtype.Date
+	Termin int32
+	Washer int32
+}
+
+func (q *Queries) AddReservation(ctx context.Context, arg AddReservationParams) (Reservation, error) {
+	row := q.db.QueryRow(ctx, addReservation,
+		arg.Uuid,
+		arg.Date,
+		arg.Termin,
+		arg.Washer,
+	)
+	var i Reservation
+	err := row.Scan(
+		&i.ID,
+		&i.Uuid,
+		&i.Date,
+		&i.Termin,
+		&i.Washer,
+	)
+	return i, err
+}
+
 const banUser = `-- name: BanUser :exec
 UPDATE users
 SET disabled = TRUE
@@ -78,22 +115,38 @@ func (q *Queries) EditUser(ctx context.Context, arg EditUserParams) error {
 }
 
 const getReservationsByMonth = `-- name: GetReservationsByMonth :many
-SELECT get_reservations_by_month FROM get_reservations_by_month($1)
+SELECT
+    r.id,
+    r.uuid,
+    r.date,
+    r.termin,
+    r.washer
+FROM
+    reservations r
+WHERE
+    r.date >= DATE_TRUNC('month', $1::date)
+    AND r.date < DATE_TRUNC('month', $1::date) + INTERVAL '1 month'
 `
 
-func (q *Queries) GetReservationsByMonth(ctx context.Context, month pgtype.Date) ([]interface{}, error) {
-	rows, err := q.db.Query(ctx, getReservationsByMonth, month)
+func (q *Queries) GetReservationsByMonth(ctx context.Context, dollar_1 pgtype.Date) ([]Reservation, error) {
+	rows, err := q.db.Query(ctx, getReservationsByMonth, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []interface{}
+	var items []Reservation
 	for rows.Next() {
-		var get_reservations_by_month interface{}
-		if err := rows.Scan(&get_reservations_by_month); err != nil {
+		var i Reservation
+		if err := rows.Scan(
+			&i.ID,
+			&i.Uuid,
+			&i.Date,
+			&i.Termin,
+			&i.Washer,
+		); err != nil {
 			return nil, err
 		}
-		items = append(items, get_reservations_by_month)
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -127,22 +180,45 @@ func (q *Queries) GetUser(ctx context.Context, uuid pgtype.UUID) (User, error) {
 }
 
 const getUserReservations = `-- name: GetUserReservations :many
-SELECT get_user_reservations FROM get_user_reservations($1)
+SELECT
+    r.uuid,
+    r.id,
+    r.date,
+    r.termin,
+    r.washer
+FROM
+    reservations r
+WHERE
+    r.uuid = $1
 `
 
-func (q *Queries) GetUserReservations(ctx context.Context, userUuid pgtype.UUID) ([]interface{}, error) {
-	rows, err := q.db.Query(ctx, getUserReservations, userUuid)
+type GetUserReservationsRow struct {
+	Uuid   pgtype.UUID
+	ID     int32
+	Date   pgtype.Date
+	Termin int32
+	Washer int32
+}
+
+func (q *Queries) GetUserReservations(ctx context.Context, uuid pgtype.UUID) ([]GetUserReservationsRow, error) {
+	rows, err := q.db.Query(ctx, getUserReservations, uuid)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []interface{}
+	var items []GetUserReservationsRow
 	for rows.Next() {
-		var get_user_reservations interface{}
-		if err := rows.Scan(&get_user_reservations); err != nil {
+		var i GetUserReservationsRow
+		if err := rows.Scan(
+			&i.Uuid,
+			&i.ID,
+			&i.Date,
+			&i.Termin,
+			&i.Washer,
+		); err != nil {
 			return nil, err
 		}
-		items = append(items, get_user_reservations)
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err
@@ -189,22 +265,51 @@ func (q *Queries) GetUsers(ctx context.Context) ([]User, error) {
 }
 
 const searchUsers = `-- name: SearchUsers :many
-SELECT search_users FROM search_users($1)
+SELECT
+    u.uuid,
+    u.phone,
+    u.name,
+    u.surname,
+    u.email,
+    u.role
+FROM
+    users u
+WHERE
+    LOWER(u.name) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.surname) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.phone) LIKE LOWER('%' || $1 || '%')
+    OR LOWER(u.email) LIKE LOWER('%' || $1 || '%')
 `
 
-func (q *Queries) SearchUsers(ctx context.Context, searchText string) ([]interface{}, error) {
-	rows, err := q.db.Query(ctx, searchUsers, searchText)
+type SearchUsersRow struct {
+	Uuid    pgtype.UUID
+	Phone   string
+	Name    string
+	Surname string
+	Email   string
+	Role    string
+}
+
+func (q *Queries) SearchUsers(ctx context.Context, dollar_1 pgtype.Text) ([]SearchUsersRow, error) {
+	rows, err := q.db.Query(ctx, searchUsers, dollar_1)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []interface{}
+	var items []SearchUsersRow
 	for rows.Next() {
-		var search_users interface{}
-		if err := rows.Scan(&search_users); err != nil {
+		var i SearchUsersRow
+		if err := rows.Scan(
+			&i.Uuid,
+			&i.Phone,
+			&i.Name,
+			&i.Surname,
+			&i.Email,
+			&i.Role,
+		); err != nil {
 			return nil, err
 		}
-		items = append(items, search_users)
+		items = append(items, i)
 	}
 	if err := rows.Err(); err != nil {
 		return nil, err

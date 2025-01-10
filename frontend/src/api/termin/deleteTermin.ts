@@ -4,10 +4,10 @@ import { mutate } from "swr";
 import { fetcher } from "../swrFetcher";
 
 export const deleteTermin = (id: string) => {
-  const url = `/deleteTermin`;
+  const url = `/reservations/${id}`;
   return new Promise<void>((resolve, reject) => {
     fetcher
-      .post(url, { id: id })
+      .delete(url)
       .then((res) => {
         resolve();
       })
@@ -24,12 +24,12 @@ export const useDeleteTermin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const delTermin = (id: string, uuid: string) => {
+  const delTermin = (id: string) => {
     return new Promise<void>((resolve, reject) => {
       setLoading(true);
       deleteTermin(id)
         .then(() => {
-          mutate("getTerminsByUser/" + uuid);
+          mutate("termin");
 
           showNotification({
             color: "green",

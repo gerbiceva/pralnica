@@ -40,10 +40,9 @@ export const TerminTable = ({ uuid }: ITerminTableProps) => {
             termini.map((termin, i) => (
               <TerminRow
                 washer={termin.Washer}
-                id={termin.Uuid}
+                id={termin.ID}
                 key={termin.Uuid + i}
                 date={new Date(termin.Date)}
-                uuid={termin.Uuid}
               />
             ))}
         </tbody>

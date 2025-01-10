@@ -43,7 +43,8 @@ func main() {
 	r.Mount("/swagger", httpSwagger.WrapHandler)
 
 	r.Get("/reservations/user/{uuid}", paths.GetUserReservations)
-	r.Get("/reservations/month", paths.GetReservationsByMonth)
+	r.Get("/reservations/month/{month}", paths.GetReservationsByMonth)
+	r.Post("/reservations", paths.AddReservation)
 	r.Delete("/reservations/{id}", paths.DeleteReservation)
 
 	r.Get("/users/search", paths.SearchUsers)

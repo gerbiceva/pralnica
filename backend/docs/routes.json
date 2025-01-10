@@ -38,7 +38,20 @@
           }
         }
       },
-      "/reservations/month": {
+      "/reservations": {
+        "handlers": {
+          "POST": {
+            "middlewares": [],
+            "method": "POST",
+            "pkg": "rso/m/paths",
+            "func": "AddReservation",
+            "comment": "AddReservation adds a new reservation.\n",
+            "file": "/home/lanv/rso-projekt/backend/paths/reservations.go",
+            "line": 89
+          }
+        }
+      },
+      "/reservations/month/{month}": {
         "handlers": {
           "GET": {
             "middlewares": [],
@@ -60,7 +73,7 @@
             "func": "GetUserReservations",
             "comment": "GetUserReservations retrieves a user's reservations.\n",
             "file": "/home/lanv/rso-projekt/backend/paths/reservations.go",
-            "line": 15
+            "line": 18
           }
         }
       },
@@ -73,7 +86,7 @@
             "func": "DeleteReservation",
             "comment": "DeleteReservation deletes a specific reservation.\n",
             "file": "/home/lanv/rso-projekt/backend/paths/reservations.go",
-            "line": 59
+            "line": 70
           }
         }
       },
@@ -114,7 +127,7 @@
             "func": "BanUser",
             "comment": "BanUser disables a user.\n",
             "file": "/home/lanv/rso-projekt/backend/paths/users.go",
-            "line": 99
+            "line": 103
           }
         }
       },
@@ -127,7 +140,7 @@
             "func": "ConfirmUser",
             "comment": "ConfirmUser updates a user's 'confirmed' status.\n",
             "file": "/home/lanv/rso-projekt/backend/paths/users.go",
-            "line": 77
+            "line": 81
           }
         }
       },
@@ -175,7 +188,7 @@
             "func": "EditUser",
             "comment": "EditUser updates a user's information.\n",
             "file": "/home/lanv/rso-projekt/backend/paths/users.go",
-            "line": 119
+            "line": 123
           }
         }
       }

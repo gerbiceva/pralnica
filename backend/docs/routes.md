@@ -16,12 +16,23 @@ Welcome to the documentation for the RESTful API.
 
 </details>
 <details>
-<summary>`/reservations/month`</summary>
+<summary>`/reservations`</summary>
 
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
-- **/reservations/month**
+- **/reservations**
+	- _POST_
+		- [AddReservation]()
+
+</details>
+<details>
+<summary>`/reservations/month/{month}`</summary>
+
+- [Logger]()
+- [o-chi/cors.(*Cors).Handler-fm]()
+- [66b/chi-prometheus.Middleware.handler-fm]()
+- **/reservations/month/{month}**
 	- _GET_
 		- [GetReservationsByMonth]()
 
@@ -128,4 +139,4 @@ Welcome to the documentation for the RESTful API.
 
 </details>
 
-Total # of routes: 11
+Total # of routes: 12

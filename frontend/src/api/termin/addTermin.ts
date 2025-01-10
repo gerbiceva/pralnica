@@ -4,8 +4,8 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "../swrFetcher";
 
 export interface ITermin {
+  ID: string;
   Uuid: string; // user id
-  Id: string; // item id
   Date: Date;
   Termin: number;
   Washer: number;
@@ -14,10 +14,15 @@ export interface ITermin {
 type AddTermin = Omit<ITermin, "id">;
 
 const addTermin = (termin: AddTermin) => {
-  const url = "/addTermin";
+  const url = "/reservations";
+  termin.Date.setDate(termin.Date.getDate() + 1);
+
   return new Promise<void>((resolve, reject) => {
     fetcher
-      .post<AddTermin>(url, termin)
+      .post<AddTermin>(url, {
+        ...termin,
+        Date: termin.Date,
+      })
       .then((res) => {
         resolve();
       })
@@ -39,7 +44,10 @@ export const useAddTermin = () => {
       setLoading(true);
       addTermin(termin)
         .then(() => {
-          mutate("getTerminsByUser/");
+          mutate((key: string) => {
+            typeof key === "string" && key.includes("Reservation");
+          });
+          mutate("termin");
           showNotification({
             color: "green",
             title: "Dodano!",
