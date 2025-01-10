@@ -31,17 +31,12 @@ export const Spranje = () => {
 
   const [thisMonth, setMonth] = useState(new Date());
 
-  const { data, error } = useGetTerminsMonthly(
-    thisMonth.getMonth() + 1,
-    thisMonth.getFullYear()
-  );
+  const { data, error } = useGetTerminsMonthly(thisMonth);
 
   function dateSetterWrap(date: Date) {
     setActiveTab("dan");
     setDate(date);
   }
-
-  console.log({ data });
 
   return (
     <Tabs
@@ -87,7 +82,6 @@ export const Spranje = () => {
         {activeTab === "mesec" && (
           <Cal
             data={data || []}
-            date={date}
             setDate={dateSetterWrap}
             month={thisMonth}
             setMonth={setMonth}
@@ -105,7 +99,12 @@ export const Spranje = () => {
         )}
         {!data && !error && <Loader />}
         {data && activeTab === "dan" && (
-          <Day date={date} data={data[date.getDate() - 1]} />
+          <Day
+            date={date}
+            data={data.filter(
+              (t) => new Date(t.Date).getDate() == date.getDate()
+            )}
+          />
         )}
         {/* </Box> */}
       </Stack>

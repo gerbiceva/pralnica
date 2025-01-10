@@ -1,46 +1,28 @@
-import {
-  Box,
-  Group,
-  Text,
-  Indicator,
-  Stack,
-  Flex,
-  Badge,
-  Avatar,
-  RingProgress,
-  Notification,
-} from "@mantine/core";
+import { Box, Flex, RingProgress, Text } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
-import { useState } from "react";
-import { useGetTerminsMonthly } from "../api/termin/getTermin";
 import "dayjs/locale/sl";
-import { useMediaQuery } from "@mantine/hooks";
-import { useIsMobile } from "../hooks/media";
 import { ITermin } from "../api/termin/addTermin";
+import { useIsMobile } from "../hooks/media";
 
 interface ICalProps {
-  date: Date;
   setDate: (date: Date) => void;
-  data: ITermin[][];
+  data: ITermin[];
   month: Date;
   setMonth: (date: Date) => void;
 }
 
-export function Cal({
-  date,
-  setDate,
-  data,
-  month: thisMonth,
-  setMonth,
-}: ICalProps) {
+export function Cal({ setDate, data, month: thisMonth, setMonth }: ICalProps) {
   const today = new Date(new Date().setHours(0, 0, 0, 0));
   const maxDate = new Date();
   maxDate.setMonth(today.getMonth() + 1);
 
   const mobile = useIsMobile();
 
+  console.log(data);
+
   return (
     <>
+      {/* {JSON.stringify(data, null, 2)} */}
       <Calendar
         locale="sl"
         lang="sl"
@@ -86,19 +68,11 @@ export function Cal({
                   sections={[
                     {
                       value:
-                        ((data[day - 1] || []).filter((t) => t.washer == 1)
+                        (data.filter((t) => new Date(t.Date).getDate() == day)
                           .length /
                           8) *
                         50,
                       color: "cyan",
-                    },
-                    {
-                      value:
-                        ((data[day - 1] || []).filter((t) => t.washer == 2)
-                          .length /
-                          8) *
-                        50,
-                      color: "orange",
                     },
                   ].filter((s) => s.value > 0)}
                 />

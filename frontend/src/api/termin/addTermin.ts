@@ -4,11 +4,11 @@ import useSWR, { mutate } from "swr";
 import { fetcher } from "../swrFetcher";
 
 export interface ITermin {
-  uuid: string; // user id
-  id: string; // item id
-  date: number;
-  termin: number;
-  washer: number;
+  Uuid: string; // user id
+  Id: string; // item id
+  Date: Date;
+  Termin: number;
+  Washer: number;
 }
 
 type AddTermin = Omit<ITermin, "id">;

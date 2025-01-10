@@ -65,14 +65,14 @@ export default function App() {
                   </ProtectedPath>
                 }
               />
-              <Route
+              {/* <Route
                 path="pravilnik"
                 element={
                   <ProtectedPath>
                     <Pravilnik />
                   </ProtectedPath>
                 }
-              />
+              /> */}
               <Route
                 path="navodila"
                 element={

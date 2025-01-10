@@ -13,8 +13,8 @@ export function generateTermini(termini: ITermin[]): [ITermin?, ITermin?][] {
 
   for (let termin of termini) {
     // first washer queue
-    const ind = termin.termin;
-    out[ind][termin.washer - 1] = termin;
+    const ind = termin.Termin;
+    out[ind][(termin.Washer % 2) - 1] = termin;
   }
 
   return out;

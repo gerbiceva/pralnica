@@ -51,6 +51,7 @@ export const TerminRow = ({
   uuid: string;
 }) => {
   const { delTermin, error, loading } = useDeleteTermin();
+
   return (
     <tr>
       <td>

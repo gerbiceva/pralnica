@@ -19,7 +19,6 @@ import { useState } from "react";
 import { ITermin, useAddTermin } from "../api/termin/addTermin";
 import { useIsMobile } from "../hooks/media";
 import { me } from "../store/store";
-import { RowProps } from "./AccordioList";
 import { UserButton } from "./UserButton";
 import { useStore } from "@nanostores/react";
 import { generateTermini } from "./terminiUtil";
@@ -57,7 +56,7 @@ const ReservationTd = ({
           confirm("Ali si prepričan, da želiš rezervirati termin?") &&
             addTerminF({
               uuid: selfUser?.uuid || "",
-              date: date.getTime() / 1000,
+              date: date,
               termin: termin,
               washer: washer,
             });
@@ -231,7 +230,6 @@ export const TableDay = ({
   // termini are an array of reserved slots and their user info.
   // Since we need the free slots as well, we need to generate this info
   const newTerm = generateTermini(termini);
-  console.log({ newTerm });
 
   return (
     <ScrollArea>
