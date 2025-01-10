@@ -23,6 +23,7 @@ import { UserButton } from "./UserButton";
 import { useStore } from "@nanostores/react";
 import { generateTermini } from "./terminiUtil";
 import { useFetchUser } from "../api/users/getUser";
+import { useDeleteTermin } from "../api/termin/deleteTermin";
 
 const useStyles = createStyles((theme) => ({
   name: {
@@ -40,7 +41,7 @@ const ReservationTd = ({
 }: {
   washer: number;
   date: Date;
-  termin: number;
+  termin?: ITermin;
 }) => {
   const mobile = useIsMobile();
   const { addTerminF, loading, error } = useAddTermin();
@@ -54,10 +55,12 @@ const ReservationTd = ({
         variant="subtle"
         onClick={() => {
           confirm("Ali si prepričan, da želiš rezervirati termin?") &&
+            termin &&
             addTerminF({
+              ID: termin.ID,
               Uuid: selfUser?.Uuid || "",
               Date: date,
-              Termin: termin,
+              Termin: termin.Termin,
               Washer: washer,
             });
         }}
@@ -108,6 +111,7 @@ const ReservationTdUser = ({
 interface ReservationModalProps {
   opened: boolean;
   setOpened: (arg0: boolean) => void;
+  termin?: ITermin;
   hourFrom: number;
   hourTo: number;
   uuid: string;
@@ -117,11 +121,12 @@ const ReservationModal = ({
   hourTo,
   opened,
   setOpened,
+  termin,
   uuid,
 }: ReservationModalProps) => {
   const { data: user, error: userErr, mutate } = useFetchUser(uuid);
   const { classes } = useStyles();
-  const { addTerminF, error: terminErr, loading } = useAddTermin();
+  const { delTermin } = useDeleteTermin();
 
   return (
     <Modal
@@ -177,7 +182,8 @@ const ReservationModal = ({
             color="red"
             onClick={() => {
               confirm("Ali si prepričan, da želiš prijaviti osebo?") &&
-                alert("Prijavljeno");
+                termin &&
+                delTermin(termin.ID);
               setOpened(false);
             }}
           >
@@ -201,13 +207,15 @@ interface UserRowProps {
   hourFrom: number;
   hourTo: number;
   uuid: string;
+  termin?: ITermin;
 }
-const UserRow = ({ hourFrom, hourTo, uuid }: UserRowProps) => {
+const UserRow = ({ hourFrom, hourTo, uuid, termin }: UserRowProps) => {
   const [opened, setOpened] = useState(false);
 
   return (
     <>
       <ReservationModal
+        termin={termin}
         hourFrom={hourFrom}
         hourTo={hourTo}
         opened={opened}
@@ -254,23 +262,25 @@ export const TableDay = ({
                 <td>
                   {left ? (
                     <UserRow
+                      termin={item[0]}
                       hourFrom={hourFrom}
                       hourTo={hourTo}
                       uuid={left.Uuid}
                     />
                   ) : (
-                    <ReservationTd washer={1} termin={i} date={date} />
+                    <ReservationTd washer={1} termin={item[0]} date={date} />
                   )}
                 </td>
                 <td>
                   {right ? (
                     <UserRow
+                      termin={item[0]}
                       hourFrom={hourFrom}
                       hourTo={hourTo}
                       uuid={right.Uuid}
                     />
                   ) : (
-                    <ReservationTd washer={2} termin={i} date={date} />
+                    <ReservationTd washer={2} termin={item[1]} date={date} />
                   )}
                 </td>
                 <td>
