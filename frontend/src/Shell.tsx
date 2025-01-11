@@ -18,12 +18,14 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useIsMobile } from "./hooks/media";
 import { useLiveData } from "./rabbitMQ/client";
 import { IconCloud } from "@tabler/icons";
+import { useWeatherPolling } from "./grpc/grpcClient";
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const mobile = useIsMobile();
   const { data, isConnected, error } = useLiveData();
+  const { weather } = useWeatherPolling();
 
   return (
     <AppShell
@@ -116,7 +118,7 @@ export default function AppShellDemo() {
 
               <Group align="center">
                 <IconCloud></IconCloud>
-                {data?.weather}
+                <Text>{weather?.weather}</Text>
               </Group>
 
               {import.meta.env.MODE == "development" && (

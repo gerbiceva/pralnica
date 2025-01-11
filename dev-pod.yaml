@@ -15,6 +15,22 @@ spec:
     #     - name: fe-volume
     #       mountPath: /app
 
+    - name: python-app
+      image: python:3.11
+      workingDir: /app
+      command: ["/bin/sh", "-c"]
+      args:
+        - pip install -r requirements.txt &&
+          python server.py;
+      ports:
+        - containerPort: 8080
+      volumeMounts:
+        - name: python-volume
+          mountPath: /app
+      env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+
     - name: backend
       image: qmcgaw/godevcontainer
       workingDir: /app  # Sets the default working directory
@@ -112,4 +128,8 @@ spec:
       hostPath:
         path: ./prometheus/prometheus.yml
         type: Directory
-
+        
+    - name: python-volume
+      hostPath:
+        path: ./python
+        type: Directory

@@ -132,10 +132,10 @@ Welcome to the documentation for the RESTful API.
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
 - **/users/{uuid}**
-	- _GET_
-		- [GetUser]()
 	- _POST_
 		- [EditUser]()
+	- _GET_
+		- [GetUser]()
 
 </details>
 
