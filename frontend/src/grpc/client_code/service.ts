@@ -4,29 +4,44 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
- * @generated from protobuf message Nekaj
+ * @generated from protobuf message Void
  */
-export interface Nekaj {
+export interface Void {
+}
+/**
+ * @generated from protobuf message Weather
+ */
+export interface Weather {
     /**
-     * @generated from protobuf field: int32 helo = 1;
+     * @generated from protobuf field: string weather = 1;
      */
-    helo: number;
+    weather: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class Nekaj$Type extends MessageType<Nekaj> {
+class Void$Type extends MessageType<Void> {
     constructor() {
-        super("Nekaj", [
-            { no: 1, name: "helo", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        super("Void", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message Void
+ */
+export const Void = new Void$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Weather$Type extends MessageType<Weather> {
+    constructor() {
+        super("Weather", [
+            { no: 1, name: "weather", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message Nekaj
+ * @generated MessageType for protobuf message Weather
  */
-export const Nekaj = new Nekaj$Type();
+export const Weather = new Weather$Type();
 /**
- * @generated ServiceType for protobuf service PralnicaService
+ * @generated ServiceType for protobuf service WeatherService
  */
-export const PralnicaService = new ServiceType("PralnicaService", [
-    { name: "Hello", options: {}, I: Nekaj, O: Nekaj }
+export const WeatherService = new ServiceType("WeatherService", [
+    { name: "GetWeather", options: {}, I: Void, O: Weather }
 ]);

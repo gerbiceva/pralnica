@@ -28,12 +28,6 @@ export const useLiveData = () => {
     client.subscribe(`/topic/weather`, (m) => {
       const msg: LiveDataProps = JSON.parse(m.body);
       setData(msg);
-      // console.log({ msg }, m);
-    });
-
-    client.publish({
-      destination: "/topic/weather",
-      body: JSON.stringify({ weather: "sadasdasd" }),
     });
   };
 
@@ -49,9 +43,6 @@ export const useLiveData = () => {
 
   client.onChangeState = (state) => {
     console.log({ state });
-    // if (state == 2) {
-
-    // }
   };
 
   client.onWebSocketError = (err) => {
@@ -69,11 +60,6 @@ export const useLiveData = () => {
       client.deactivate();
     };
   }, []);
-
-  // client.publish({
-  //   destination: "/topic/weather",
-  //   body: "sadasdasd",
-  // });
 
   return {
     isConnected,

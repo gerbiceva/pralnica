@@ -3,38 +3,39 @@
 // tslint:disable
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { PralnicaService } from "./service";
+import { WeatherService } from "./service";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { Nekaj } from "./service";
+import type { Weather } from "./service";
+import type { Void } from "./service";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
- * @generated from protobuf service PralnicaService
+ * @generated from protobuf service WeatherService
  */
-export interface IPralnicaServiceClient {
+export interface IWeatherServiceClient {
     /**
      * get the list of nodes that the server supports along with their descriptions
      *
-     * @generated from protobuf rpc: Hello(Nekaj) returns (Nekaj);
+     * @generated from protobuf rpc: GetWeather(Void) returns (Weather);
      */
-    hello(input: Nekaj, options?: RpcOptions): UnaryCall<Nekaj, Nekaj>;
+    getWeather(input: Void, options?: RpcOptions): UnaryCall<Void, Weather>;
 }
 /**
- * @generated from protobuf service PralnicaService
+ * @generated from protobuf service WeatherService
  */
-export class PralnicaServiceClient implements IPralnicaServiceClient, ServiceInfo {
-    typeName = PralnicaService.typeName;
-    methods = PralnicaService.methods;
-    options = PralnicaService.options;
+export class WeatherServiceClient implements IWeatherServiceClient, ServiceInfo {
+    typeName = WeatherService.typeName;
+    methods = WeatherService.methods;
+    options = WeatherService.options;
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
      * get the list of nodes that the server supports along with their descriptions
      *
-     * @generated from protobuf rpc: Hello(Nekaj) returns (Nekaj);
+     * @generated from protobuf rpc: GetWeather(Void) returns (Weather);
      */
-    hello(input: Nekaj, options?: RpcOptions): UnaryCall<Nekaj, Nekaj> {
+    getWeather(input: Void, options?: RpcOptions): UnaryCall<Void, Weather> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<Nekaj, Nekaj>("unary", this._transport, method, opt, input);
+        return stackIntercept<Void, Weather>("unary", this._transport, method, opt, input);
     }
 }
