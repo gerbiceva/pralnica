@@ -10,6 +10,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/metrics**
 	- _*_
 		- [InstrumentHandlerCounter.func1]()
@@ -21,6 +22,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/reservations**
 	- _POST_
 		- [AddReservation]()
@@ -32,6 +34,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/reservations/month/{month}**
 	- _GET_
 		- [GetReservationsByMonth]()
@@ -43,6 +46,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/reservations/user/{uuid}**
 	- _GET_
 		- [GetUserReservations]()
@@ -54,6 +58,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/reservations/{id}**
 	- _DELETE_
 		- [DeleteReservation]()
@@ -65,6 +70,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/swagger**
 	- _*_
 		- [v5.(*Mux).Mount.func1]()
@@ -76,6 +82,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users**
 	- _GET_
 		- [GetUsers]()
@@ -87,6 +94,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users/ban/{uuid}**
 	- _POST_
 		- [BanUser]()
@@ -98,6 +106,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users/confirm/{uuid}**
 	- _POST_
 		- [ConfirmUser]()
@@ -109,6 +118,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users/search**
 	- _GET_
 		- [SearchUsers]()
@@ -120,6 +130,7 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users/self**
 	- _GET_
 		- [GetSelf]()
@@ -131,11 +142,12 @@ Welcome to the documentation for the RESTful API.
 - [Logger]()
 - [o-chi/cors.(*Cors).Handler-fm]()
 - [66b/chi-prometheus.Middleware.handler-fm]()
+- [github.com/pmatteo/chi-healthcheck-middleware.NewHealthChecker.func1]()
 - **/users/{uuid}**
-	- _POST_
-		- [EditUser]()
 	- _GET_
 		- [GetUser]()
+	- _POST_
+		- [EditUser]()
 
 </details>
 

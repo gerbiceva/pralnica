@@ -17,6 +17,8 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 
 	chiprometheus "github.com/766b/chi-prometheus"
+
+	healthcheck "github.com/pmatteo/chi-healthcheck-middleware"
 )
 
 const PORT = 1234
@@ -38,8 +40,14 @@ func main() {
 
 	m := chiprometheus.NewMiddleware("serviceName")
 	r.Use(m)
-	r.Handle("/metrics", promhttp.Handler())
 
+	// Set up the health check middleware with different configurations
+	healthMiddleware := healthcheck.NewHealthChecker(
+		healthcheck.WithEndpointDefaultProbe("/health"), // Adds a default health check endpoint at /health
+	)
+	r.Use(healthMiddleware)
+
+	r.Handle("/metrics", promhttp.Handler())
 	r.Mount("/swagger", httpSwagger.WrapHandler)
 
 	r.Get("/reservations/user/{uuid}", paths.GetUserReservations)
