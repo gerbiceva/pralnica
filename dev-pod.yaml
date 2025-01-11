@@ -5,15 +5,15 @@ metadata:
 spec:
   hostNetwork: true
   containers:
-    - name: frontend
-      image: node:18
-      workingDir: /app  # Sets the default working directory
-      command: ["yarn", "dev"]
-      ports:
-        - containerPort: 5173
-      volumeMounts:
-        - name: fe-volume
-          mountPath: /app
+    # - name: frontend
+    #   image: node:18
+    #   workingDir: /app  # Sets the default working directory
+    #   command: ["yarn", "dev"]
+    #   ports:
+    #     - containerPort: 5173
+    #   volumeMounts:
+    #     - name: fe-volume
+    #       mountPath: /app
 
     - name: backend
       image: qmcgaw/godevcontainer
@@ -68,22 +68,24 @@ spec:
     - name: rabbitMQ
       image: rabbitmq:3-management
       ports:
-        - containerPort: 5672
+        - containerPort: 15674
         - containerPort: 15672
         - containerPort: 15692
-      # volumeMounts:
-      #   - name: mq-volume
-      #     mountPath: /etc/rabbitmq
+      volumeMounts:
+        - name: mq-volume
+          mountPath: /etc/rabbitmq/enabled_plugins
       env:
         - name: RABBITMQ_DEFAULT_USER
           value: zajec
         - name: RABBITMQ_DEFAULT_PASS
           value: korenje
 
+
     - name: prometheus
       image: prom/prometheus
       ports:
         - containerPort: 9090
+        - containerPort: 5672
       volumeMounts:
         - name: prometheus-conf-volume
           mountPath: /etc/prometheus/prometheus.yml
@@ -104,8 +106,8 @@ spec:
         type: Directory
     - name: mq-volume
       hostPath:
-        path: ./rabbitmq
-        type: Directory
+        path: ./rabbitmq/enabled_plugins
+        type: File
     - name: prometheus-conf-volume
       hostPath:
         path: ./prometheus/prometheus.yml

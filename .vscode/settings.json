@@ -1,6 +1,4 @@
 {
-  "folder-path-color.folders": [
-    { "path": "frontend"},
-    { "path": "backend" },
-]
+  "folder-path-color.folders": [{ "path": "frontend" }, { "path": "backend" }],
+  "makefile.configureOnOpen": false
 }

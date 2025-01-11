@@ -10,16 +10,20 @@ import {
   useMantineTheme,
   Flex,
   Box,
+  Group,
 } from "@mantine/core";
 import { Outlet, useNavigate } from "react-router-dom";
 import { NavbarMinimal } from "./Sidebar";
 import { useMediaQuery } from "@mantine/hooks";
 import { useIsMobile } from "./hooks/media";
+import { useLiveData } from "./rabbitMQ/client";
+import { IconCloud } from "@tabler/icons";
 
 export default function AppShellDemo() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const mobile = useIsMobile();
+  const { data, isConnected, error } = useLiveData();
 
   return (
     <AppShell
@@ -109,6 +113,11 @@ export default function AppShellDemo() {
                   SPRALNICA
                 </Text>
               </Flex>
+
+              <Group align="center">
+                <IconCloud></IconCloud>
+                {data?.weather}
+              </Group>
 
               {import.meta.env.MODE == "development" && (
                 <Text color="grape">{import.meta.env.MODE}</Text>
