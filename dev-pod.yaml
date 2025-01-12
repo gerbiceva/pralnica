@@ -5,15 +5,15 @@ metadata:
 spec:
   hostNetwork: true
   containers:
-    # - name: frontend
-    #   image: node:18
-    #   workingDir: /app  # Sets the default working directory
-    #   command: ["yarn", "dev"]
-    #   ports:
-    #     - containerPort: 5173
-    #   volumeMounts:
-    #     - name: fe-volume
-    #       mountPath: /app
+    - name: frontend
+      image: node:18
+      workingDir: /app  # Sets the default working directory
+      command: ["yarn", "dev"]
+      ports:
+        - containerPort: 5173
+      volumeMounts: # samo za dev, lahko kopiras vse
+        - name: fe-volume
+          mountPath: /app
 
     - name: python-app
       image: python:3.11
@@ -24,7 +24,7 @@ spec:
           python server.py;
       ports:
         - containerPort: 8080
-      volumeMounts:
+      volumeMounts:  # samo za dev, lahko kopiras vse
         - name: python-volume
           mountPath: /app
       env:
@@ -37,7 +37,7 @@ spec:
       command: ["go", "run", "main.go"]
       ports:
         - containerPort: 1234
-      volumeMounts:
+      volumeMounts:  # samo za dev, lahko kopiras vse
         - name: be-volume
           mountPath: /app
       env:
@@ -46,7 +46,7 @@ spec:
         - name: PGHOST
           value: localhost  # En
 
-    - name: schema-dumper
+    - name: schema-dumper # samo ignoriras ker nerabis vec
       image: postgres
       workingDir: /app  # Directory inside the container to store the dump
       command: ["/bin/sh", "-c", "pg_dump --username=postgres --schema-only > schema.sql"]
@@ -62,7 +62,7 @@ spec:
         restartPolicy: Never
       
 
-    - name: postgres
+    - name: postgres # ignoriras nerabis
       image: postgres
       ports:
         - containerPort: 8080
@@ -81,13 +81,13 @@ spec:
         timeout: 5s
         retries: 0
 
-    - name: rabbitMQ
+    - name: rabbitMQ 
       image: rabbitmq:3-management
       ports:
-        - containerPort: 15674
-        - containerPort: 15672
-        - containerPort: 15692
-      volumeMounts:
+        - containerPort: 15674 # stomp_web
+        - containerPort: 15672 # amp
+        - containerPort: 15692 # metrics
+      volumeMounts: # samo za dev, lahko kopiras vse
         - name: mq-volume
           mountPath: /etc/rabbitmq/enabled_plugins
       env:
@@ -102,9 +102,22 @@ spec:
       ports:
         - containerPort: 9090
         - containerPort: 5672
-      volumeMounts:
+      volumeMounts:  # samo za dev, lahko kopiras vse
         - name: prometheus-conf-volume
           mountPath: /etc/prometheus/prometheus.yml
+
+    - name: grafana
+      image: grafana/grafana:latest
+      ports:
+        - containerPort: 3000
+      volumeMounts:  # nevem zares
+        - name: grafana-conf
+          mountPath: /etc/grafana/provisioning/datasources
+      env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: admin
+        - name: GF_SECURITY_ADMIN_USER
+          value: admin
 
 
   volumes:
@@ -128,8 +141,11 @@ spec:
       hostPath:
         path: ./prometheus/prometheus.yml
         type: Directory
-        
     - name: python-volume
       hostPath:
         path: ./python
+        type: Directory
+    - name: grafana-conf
+      hostPath:
+        path: ./grafana
         type: Directory

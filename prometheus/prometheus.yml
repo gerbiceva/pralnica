@@ -37,3 +37,9 @@ scrape_configs:
     # scheme defaults to 'http'.
     static_configs:
       - targets: ["localhost:15692"]
+
+  - job_name: "python weather"
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["localhost:8080"]
