@@ -3,7 +3,7 @@ import python_weather
 from fastapi import FastAPI
 import uvicorn
 from grpc_server.service_pb2 import Weather, Void
-from grpc_server.service_pb2_grpc import WeatherServiceServicer, add_MyServiceServicer_to_server
+from grpc_server.service_pb2_grpc import WeatherServiceServicer, add_WeatherServiceServicer_to_server
 from sonora.asgi import grpcASGI
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -22,7 +22,7 @@ class MyService(WeatherServiceServicer):
         """get the weather string description"""
         async with python_weather.Client() as client:
             weather = await client.get("Ljubljana")
-            return Weather(weather=f"Current temperature: {weather.current.temperature}°C")
+            return Weather(weather=f"Current temperature: {weather.temperature}°C")
 
 class GRPCWebMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp):
@@ -36,7 +36,7 @@ class GRPCWebMiddleware(BaseHTTPMiddleware):
 
 async def grpc_server():
     application = grpcASGI(uvicorn, False)
-    add_MyServiceServicer_to_server(MyService(), application)
+    add_WeatherServiceServicer_to_server(MyService(), application)
 
     # Add CORS middleware
     application = CORSMiddleware(
