@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  test:
     runs-on: self-hosted
     container: fedora:latest
     steps:
