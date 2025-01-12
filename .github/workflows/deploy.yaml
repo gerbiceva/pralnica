@@ -9,22 +9,22 @@ on:
       - master
 
 jobs:
-  test:
+  build-python:
     runs-on: self-hosted
     container: fedora:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 3: Log in to GitHub Container Registry (GHCR)
-    - name: Log in to GitHub Container Registry
-      run: |
-        echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
+        # Step 3: Log in to GitHub Container Registry (GHCR)
+      - name: Log in to GitHub Container Registry
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | podman login ghcr.io -u ${{ github.actor }} --password-stdin
 
-    # Step 4: Build and push the container image
-    - name: Build and Push Container Image to GHCR
-      run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/python:latest
-        cd python
-        podman build -f ./Dockerfile -t $IMAGE_NAME .
-        podman push $IMAGE_NAME
+      # Step 4: Build and push the container image
+      - name: Build and Push Container Image to GHCR
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/python:latest
+          cd python
+          podman build -f ./Dockerfile -t $IMAGE_NAME .
+          podman push $IMAGE_NAME
