@@ -11,10 +11,15 @@ on:
 jobs:
   test:
     runs-on: self-hosted
-    container: ubuntu:latest
+    container: fedora:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Alias docker to podman
+        run: |
+          echo "alias docker=podman" >> $HOME/.bashrc
+          source $HOME/.bashrc
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
