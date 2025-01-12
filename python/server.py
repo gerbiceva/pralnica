@@ -36,7 +36,7 @@ class GRPCWebMiddleware(BaseHTTPMiddleware):
 
 async def grpc_server():
     application = grpcASGI(uvicorn, False)
-    add_MyServiceServicer_to_server(MyService(), application)
+    add_WeatherServiceServicer_to_server(MyService(), application)
 
     # Add CORS middleware
     application = CORSMiddleware(
