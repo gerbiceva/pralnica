@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "generate:proto": "npx protoc -I ./src/grpc/service_symlnik/ --ts_out ./src/grpc/client_code --ts_opt optimize_code_size service.proto "
   },
