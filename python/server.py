@@ -1,4 +1,5 @@
 import asyncio
+import python_weather
 from fastapi import FastAPI
 import uvicorn
 from grpc_server.service_pb2 import Weather, Void
@@ -19,8 +20,9 @@ async def healthcheck():
 class MyService(WeatherServiceServicer):
     async def GetWeather(self, request, context):
         """get the weather string description"""
-        # TODO: Implement your logic to fetch weather
-        return Weather(weather="sunny")
+        async with python_weather.Client() as client:
+            weather = await client.get("Ljubljana")
+            return Weather(weather=f"Current temperature: {weather.current.temperature}°C")
 
 class GRPCWebMiddleware(BaseHTTPMiddleware):
     def __init__(self, app: ASGIApp):

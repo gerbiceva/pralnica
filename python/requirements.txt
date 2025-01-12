@@ -4,3 +4,4 @@ sonora
 uvicorn
 starlette
 fastapi
+python-weather
