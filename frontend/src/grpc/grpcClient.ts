@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Weather } from "./client_code/service";
 
 const transport = new GrpcWebFetchTransport({
-  baseUrl: "http://localhost:50051",
+  baseUrl: import.meta.env.VITE_BACKEND_WEATHER,
   format: "binary",
   meta: {
     token: "ojla",
