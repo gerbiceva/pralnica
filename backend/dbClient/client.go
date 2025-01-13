@@ -5,7 +5,7 @@ import (
 	"log"
 	"rso/m/pralnicaDb"
 	"time"
-
+	"os"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -16,7 +16,7 @@ func InitDbClient() {
 	// secretKey := os.Getenv("SECRET_KEY")
 
 	// Load database URL from environment variable
-	databaseURL := "postgres://postgres:trust@localhost:5432/postgres" // Example: "postgres://user:password@localhost:5432/dbname"
+	databaseURL := fmt.Sprintf("postgres://postgres:trust@%s:5432/postgres", os.Getenv("URL")) // Example: "postgres://user:password@localhost:5432/dbname"
 	if databaseURL == "" {
 		log.Fatal("DATABASE_URL environment variable is not set")
 	}

@@ -7,6 +7,8 @@ RUN go mod download
 
 COPY ./ ./
 
+ENV URL zaanimivo.xyz
+
 RUN CGO_ENABLED=0 GOOS=linux go build -o /backend
 
 RUN chmod +x /backend
