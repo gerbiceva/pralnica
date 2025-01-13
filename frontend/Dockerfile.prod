@@ -9,7 +9,7 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-RUN yarn build
+RUN yarn build-prod
 
 FROM docker.io/library/nginx:1.25.1-alpine AS prod
 

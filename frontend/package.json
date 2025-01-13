@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "build-prod": "vite build -- mode production",
     "preview": "vite preview",
     "generate:proto": "npx protoc -I ./src/grpc/service_symlnik/ --ts_out ./src/grpc/client_code --ts_opt optimize_code_size service.proto "
   },
