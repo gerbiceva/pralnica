@@ -17,7 +17,7 @@ func InitDbClient() {
 	// secretKey := os.Getenv("SECRET_KEY")
 
 	// Load database URL from environment variable
-	databaseURL := fmt.Sprintf("postgres://postgres:trust@%s:5432/postgres", os.Getenv("URL")) // Example: "postgres://user:password@localhost:5432/dbname"
+	databaseURL := fmt.Sprintf("postgres://postgres:%s@%s:5432/postgres", os.Getenv("PASSWORD"), os.Getenv("URL")) // Example: "postgres://user:password@localhost:5432/dbname"
 	if databaseURL == "" {
 		log.Fatal("DATABASE_URL environment variable is not set")
 	}
